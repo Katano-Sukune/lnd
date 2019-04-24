@@ -3,8 +3,8 @@ package sweep
 import (
 	"sync"
 
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/wire"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
 	"github.com/lightningnetwork/lnd/lnwallet"
 )
 

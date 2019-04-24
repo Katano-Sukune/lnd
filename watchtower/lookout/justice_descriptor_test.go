@@ -7,12 +7,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/btcsuite/btcd/blockchain"
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcutil/txsort"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
+	"github.com/Katano-Sukune/xpcutil/txsort"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/lightningnetwork/lnd/input"
 	"github.com/lightningnetwork/lnd/keychain"
@@ -81,8 +81,8 @@ func TestJusticeDescriptor(t *testing.T) {
 
 func testJusticeDescriptor(t *testing.T, blobType blob.Type) {
 	const (
-		localAmount  = btcutil.Amount(100000)
-		remoteAmount = btcutil.Amount(200000)
+		localAmount  = xpcutil.Amount(100000)
+		remoteAmount = xpcutil.Amount(200000)
 		totalAmount  = localAmount + remoteAmount
 	)
 
@@ -237,7 +237,7 @@ func testJusticeDescriptor(t *testing.T, blobType blob.Type) {
 	}
 
 	// Verify that our test justice transaction is sane.
-	btx := btcutil.NewTx(justiceTxn)
+	btx := xpcutil.NewTx(justiceTxn)
 	if err := blockchain.CheckTransactionSanity(btx); err != nil {
 		t.Fatalf("justice txn is not sane: %v", err)
 	}

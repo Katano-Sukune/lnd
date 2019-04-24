@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/btcsuite/btcd/blockchain"
-	"github.com/btcsuite/btcd/rpcclient"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/rpcclient"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 const (
@@ -41,12 +41,12 @@ const (
 )
 
 // SatPerKVByte represents a fee rate in sat/kb.
-type SatPerKVByte btcutil.Amount
+type SatPerKVByte xpcutil.Amount
 
 // FeeForVSize calculates the fee resulting from this fee rate and the given
 // vsize in vbytes.
-func (s SatPerKVByte) FeeForVSize(vbytes int64) btcutil.Amount {
-	return btcutil.Amount(s) * btcutil.Amount(vbytes) / 1000
+func (s SatPerKVByte) FeeForVSize(vbytes int64) xpcutil.Amount {
+	return xpcutil.Amount(s) * xpcutil.Amount(vbytes) / 1000
 }
 
 // FeePerKWeight converts the current fee rate from sat/kb to sat/kw.
@@ -55,13 +55,13 @@ func (s SatPerKVByte) FeePerKWeight() SatPerKWeight {
 }
 
 // SatPerKWeight represents a fee rate in sat/kw.
-type SatPerKWeight btcutil.Amount
+type SatPerKWeight xpcutil.Amount
 
 // FeeForWeight calculates the fee resulting from this fee rate and the given
 // weight in weight units (wu).
-func (s SatPerKWeight) FeeForWeight(wu int64) btcutil.Amount {
+func (s SatPerKWeight) FeeForWeight(wu int64) xpcutil.Amount {
 	// The resulting fee is rounded down, as specified in BOLT#03.
-	return btcutil.Amount(s) * btcutil.Amount(wu) / 1000
+	return xpcutil.Amount(s) * xpcutil.Amount(wu) / 1000
 }
 
 // FeePerKVByte converts the current fee rate from sat/kw to sat/kb.
@@ -206,7 +206,7 @@ func (b *BtcdFeeEstimator) Start() error {
 		return err
 	}
 
-	relayFee, err := btcutil.NewAmount(info.RelayFee)
+	relayFee, err := xpcutil.NewAmount(info.RelayFee)
 	if err != nil {
 		return err
 	}
@@ -279,7 +279,7 @@ func (b *BtcdFeeEstimator) fetchEstimate(confTarget uint32) (SatPerKWeight, erro
 
 	// Next, we'll convert the returned value to satoshis, as it's
 	// currently returned in BTC.
-	satPerKB, err := btcutil.NewAmount(btcPerKB)
+	satPerKB, err := xpcutil.NewAmount(btcPerKB)
 	if err != nil {
 		return 0, err
 	}
@@ -369,7 +369,7 @@ func (b *BitcoindFeeEstimator) Start() error {
 		return err
 	}
 
-	relayFee, err := btcutil.NewAmount(info.RelayFee)
+	relayFee, err := xpcutil.NewAmount(info.RelayFee)
 	if err != nil {
 		return err
 	}
@@ -457,7 +457,7 @@ func (b *BitcoindFeeEstimator) fetchEstimate(confTarget uint32) (SatPerKWeight, 
 
 	// Next, we'll convert the returned value to satoshis, as it's currently
 	// returned in BTC.
-	satPerKB, err := btcutil.NewAmount(feeEstimate.FeeRate)
+	satPerKB, err := xpcutil.NewAmount(feeEstimate.FeeRate)
 	if err != nil {
 		return 0, err
 	}

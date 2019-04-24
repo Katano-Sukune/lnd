@@ -14,7 +14,7 @@ import (
 
 	macaroon "gopkg.in/macaroon.v2"
 
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/build"
 	"github.com/lightningnetwork/lnd/lncfg"
 	"github.com/lightningnetwork/lnd/lnrpc"
@@ -35,7 +35,7 @@ const (
 )
 
 var (
-	defaultLndDir      = btcutil.AppDataDir("lnd", false)
+	defaultLndDir      = xpcutil.AppDataDir("lnd", false)
 	defaultTLSCertPath = filepath.Join(defaultLndDir, defaultTLSCertFilename)
 
 	// maxMsgRecvSize is the largest message our client will receive. We
@@ -311,7 +311,7 @@ func main() {
 
 // cleanAndExpandPath expands environment variables and leading ~ in the
 // passed path, cleans the result, and returns it.
-// This function is taken from https://github.com/btcsuite/btcd
+// This function is taken from https://github.com/Katano-Sukune/xpcd
 func cleanAndExpandPath(path string) string {
 	if path == "" {
 		return ""

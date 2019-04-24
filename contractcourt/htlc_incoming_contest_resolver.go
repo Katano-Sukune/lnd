@@ -8,7 +8,7 @@ import (
 	"github.com/lightningnetwork/lnd/channeldb"
 	"github.com/lightningnetwork/lnd/invoices"
 
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/lntypes"
 )
 
@@ -212,7 +212,7 @@ func (h *htlcIncomingContestResolver) report() *ContractReport {
 
 	finalAmt := h.htlcAmt.ToSatoshis()
 	if h.htlcResolution.SignedSuccessTx != nil {
-		finalAmt = btcutil.Amount(
+		finalAmt = xpcutil.Amount(
 			h.htlcResolution.SignedSuccessTx.TxOut[0].Value,
 		)
 	}

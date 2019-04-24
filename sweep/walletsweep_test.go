@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/lnwallet"
 )
 
@@ -188,7 +188,7 @@ var sweepScript = []byte{
 	0xe, 0x6e, 0xf8, 0xef,
 }
 
-var deliveryAddr = func() btcutil.Address {
+var deliveryAddr = func() xpcutil.Address {
 	_, addrs, _, err := txscript.ExtractPkScriptAddrs(
 		sweepScript, &chaincfg.TestNet3Params,
 	)

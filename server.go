@@ -17,11 +17,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/connmgr"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/connmgr"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/coreos/bbolt"
 	"github.com/go-errors/errors"
 	sphinx "github.com/lightningnetwork/lightning-onion"
@@ -382,7 +382,7 @@ func newServer(listenAddrs []net.Addr, chanDB *channeldb.DB, cc *chainControl,
 	// invoice which all outgoing payments will be sent and all incoming
 	// HTLCs with the debug R-Hash immediately settled.
 	if cfg.DebugHTLC {
-		kiloCoin := btcutil.Amount(btcutil.SatoshiPerBitcoin * 1000)
+		kiloCoin := xpcutil.Amount(xpcutil.SatoshiPerBitcoin * 1000)
 		s.invoices.AddDebugInvoice(kiloCoin, invoices.DebugPre)
 		srvrLog.Debugf("Debug HTLC invoice inserted, preimage=%x, hash=%x",
 			invoices.DebugPre[:], invoices.DebugHash[:])
@@ -906,7 +906,7 @@ func newServer(listenAddrs []net.Addr, chanDB *channeldb.DB, cc *chainControl,
 			return nil, fmt.Errorf("unable to find channel")
 		},
 		DefaultRoutingPolicy: cc.routingPolicy,
-		NumRequiredConfs: func(chanAmt btcutil.Amount,
+		NumRequiredConfs: func(chanAmt xpcutil.Amount,
 			pushAmt lnwire.MilliSatoshi) uint16 {
 			// For large channels we increase the number
 			// of confirmations we require for the
@@ -945,7 +945,7 @@ func newServer(listenAddrs []net.Addr, chanDB *channeldb.DB, cc *chainControl,
 			}
 			return uint16(conf)
 		},
-		RequiredRemoteDelay: func(chanAmt btcutil.Amount) uint16 {
+		RequiredRemoteDelay: func(chanAmt xpcutil.Amount) uint16 {
 			// We scale the remote CSV delay (the time the
 			// remote have to claim funds in case of a unilateral
 			// close) linearly from minRemoteDelay blocks
@@ -962,7 +962,7 @@ func newServer(listenAddrs []net.Addr, chanDB *channeldb.DB, cc *chainControl,
 			}
 
 			// If not we scale according to channel size.
-			delay := uint16(btcutil.Amount(maxRemoteDelay) *
+			delay := uint16(xpcutil.Amount(maxRemoteDelay) *
 				chanAmt / maxFundingAmount)
 			if delay < minRemoteDelay {
 				delay = minRemoteDelay
@@ -991,7 +991,7 @@ func newServer(listenAddrs []net.Addr, chanDB *channeldb.DB, cc *chainControl,
 			return s.htlcSwitch.UpdateShortChanID(cid)
 		},
 		RequiredRemoteChanReserve: func(chanAmt,
-			dustLimit btcutil.Amount) btcutil.Amount {
+			dustLimit xpcutil.Amount) xpcutil.Amount {
 
 			// By default, we'll require the remote peer to maintain
 			// at least 1% of the total channel capacity at all
@@ -1005,21 +1005,21 @@ func newServer(listenAddrs []net.Addr, chanDB *channeldb.DB, cc *chainControl,
 
 			return reserve
 		},
-		RequiredRemoteMaxValue: func(chanAmt btcutil.Amount) lnwire.MilliSatoshi {
+		RequiredRemoteMaxValue: func(chanAmt xpcutil.Amount) lnwire.MilliSatoshi {
 			// By default, we'll allow the remote peer to fully
 			// utilize the full bandwidth of the channel, minus our
 			// required reserve.
 			reserve := lnwire.NewMSatFromSatoshis(chanAmt / 100)
 			return lnwire.NewMSatFromSatoshis(chanAmt) - reserve
 		},
-		RequiredRemoteMaxHTLCs: func(chanAmt btcutil.Amount) uint16 {
+		RequiredRemoteMaxHTLCs: func(chanAmt xpcutil.Amount) uint16 {
 			// By default, we'll permit them to utilize the full
 			// channel bandwidth.
 			return uint16(input.MaxHTLCNumber / 2)
 		},
 		ZombieSweeperInterval:  1 * time.Minute,
 		ReservationTimeout:     10 * time.Minute,
-		MinChanSize:            btcutil.Amount(cfg.MinChanSize),
+		MinChanSize:            xpcutil.Amount(cfg.MinChanSize),
 		NotifyOpenChannelEvent: s.channelNotifier.NotifyOpenChannelEvent,
 	})
 	if err != nil {
@@ -2864,8 +2864,8 @@ type openChanReq struct {
 
 	chainHash chainhash.Hash
 
-	localFundingAmt  btcutil.Amount
-	remoteFundingAmt btcutil.Amount
+	localFundingAmt  xpcutil.Amount
+	remoteFundingAmt xpcutil.Amount
 
 	pushAmt lnwire.MilliSatoshi
 

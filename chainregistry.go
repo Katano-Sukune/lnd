@@ -12,12 +12,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/rpcclient"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/chain"
-	"github.com/btcsuite/btcwallet/wallet"
-	"github.com/btcsuite/btcwallet/walletdb"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/rpcclient"
+	"github.com/Katano-Sukune/xpcutil"
+	"github.com/Katano-Sukune/xpcwallet/chain"
+	"github.com/Katano-Sukune/xpcwallet/wallet"
+	"github.com/Katano-Sukune/xpcwallet/walletdb"
 	"github.com/lightninglabs/neutrino"
 	"github.com/lightningnetwork/lnd/chainntnfs"
 	"github.com/lightningnetwork/lnd/chainntnfs/bitcoindnotify"
@@ -43,7 +43,7 @@ const (
 	defaultLitecoinBaseFeeMSat   = lnwire.MilliSatoshi(1000)
 	defaultLitecoinFeeRate       = lnwire.MilliSatoshi(1)
 	defaultLitecoinTimeLockDelta = 576
-	defaultLitecoinDustLimit     = btcutil.Amount(54600)
+	defaultLitecoinDustLimit     = xpcutil.Amount(54600)
 
 	// defaultBitcoinStaticFeePerKW is the fee rate of 50 sat/vbyte
 	// expressed in sat/kw.

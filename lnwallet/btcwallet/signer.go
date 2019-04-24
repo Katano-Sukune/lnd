@@ -1,14 +1,14 @@
 package btcwallet
 
 import (
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	base "github.com/btcsuite/btcwallet/wallet"
-	"github.com/btcsuite/btcwallet/walletdb"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
+	"github.com/Katano-Sukune/xpcwallet/waddrmgr"
+	base "github.com/Katano-Sukune/xpcwallet/wallet"
+	"github.com/Katano-Sukune/xpcwallet/walletdb"
 	"github.com/go-errors/errors"
 	"github.com/lightningnetwork/lnd/input"
 	"github.com/lightningnetwork/lnd/keychain"
@@ -121,8 +121,8 @@ func (b *BtcWallet) fetchPrivKey(keyDesc *keychain.KeyDescriptor) (*btcec.Privat
 		return key, nil
 	}
 
-	hash160 := btcutil.Hash160(keyDesc.PubKey.SerializeCompressed())
-	addr, err := btcutil.NewAddressWitnessPubKeyHash(hash160, b.netParams)
+	hash160 := xpcutil.Hash160(keyDesc.PubKey.SerializeCompressed())
+	addr, err := xpcutil.NewAddressWitnessPubKeyHash(hash160, b.netParams)
 	if err != nil {
 		return nil, err
 	}
@@ -223,13 +223,13 @@ func (b *BtcWallet) ComputeInputScript(tx *wire.MsgTx,
 	// we'll need to attach a sigScript in addition to witness data.
 	case pka.AddrType() == waddrmgr.NestedWitnessPubKey:
 		pubKey := privKey.PubKey()
-		pubKeyHash := btcutil.Hash160(pubKey.SerializeCompressed())
+		pubKeyHash := xpcutil.Hash160(pubKey.SerializeCompressed())
 
 		// Next, we'll generate a valid sigScript that will allow us to
 		// spend the p2sh output. The sigScript will contain only a
 		// single push of the p2wkh witness program corresponding to
 		// the matching public key of this address.
-		p2wkhAddr, err := btcutil.NewAddressWitnessPubKeyHash(
+		p2wkhAddr, err := xpcutil.NewAddressWitnessPubKeyHash(
 			pubKeyHash, b.netParams,
 		)
 		if err != nil {

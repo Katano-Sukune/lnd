@@ -9,10 +9,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/lightningnetwork/lnd/chainntnfs"
 	"github.com/lightningnetwork/lnd/channeldb"
@@ -39,7 +39,7 @@ var (
 // can provide that serve useful when processing a specific network
 // announcement.
 type optionalMsgFields struct {
-	capacity     *btcutil.Amount
+	capacity     *xpcutil.Amount
 	channelPoint *wire.OutPoint
 }
 
@@ -57,7 +57,7 @@ type OptionalMsgField func(*optionalMsgFields)
 
 // ChannelCapacity is an optional field that lets the gossiper know of the
 // capacity of a channel.
-func ChannelCapacity(capacity btcutil.Amount) OptionalMsgField {
+func ChannelCapacity(capacity xpcutil.Amount) OptionalMsgField {
 	return func(f *optionalMsgFields) {
 		f.capacity = &capacity
 	}

@@ -5,10 +5,10 @@ MAINTAINER Olaoluwa Osuntokun <laolu@lightning.network>
 # Install build dependencies such as git and glide.
 RUN apk add --no-cache git gcc musl-dev
 
-WORKDIR $GOPATH/src/github.com/btcsuite/btcd
+WORKDIR $GOPATH/src/github.com/Katano-Sukune/xpcd
 
 # Grab and install the latest version of of btcd and all related dependencies.
-RUN git clone https://github.com/btcsuite/btcd.git . \
+RUN git clone https://github.com/Katano-Sukune/xpcd.git . \
     &&  GO111MODULE=on go install -v . ./cmd/...
 
 # Start a new image

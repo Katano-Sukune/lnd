@@ -2,9 +2,9 @@ package lnwallet
 
 import (
 	"github.com/btcsuite/btclog"
-	"github.com/btcsuite/btcwallet/chain"
-	btcwallet "github.com/btcsuite/btcwallet/wallet"
-	"github.com/btcsuite/btcwallet/wtxmgr"
+	"github.com/Katano-Sukune/xpcwallet/chain"
+	btcwallet "github.com/Katano-Sukune/xpcwallet/wallet"
+	"github.com/Katano-Sukune/xpcwallet/wtxmgr"
 
 	"github.com/lightningnetwork/lnd/build"
 )

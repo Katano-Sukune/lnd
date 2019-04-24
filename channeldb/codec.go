@@ -6,10 +6,10 @@ import (
 	"io"
 	"net"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/keychain"
 	"github.com/lightningnetwork/lnd/lnwire"
 	"github.com/lightningnetwork/lnd/shachain"
@@ -122,7 +122,7 @@ func WriteElement(w io.Writer, element interface{}) error {
 			return err
 		}
 
-	case btcutil.Amount:
+	case xpcutil.Amount:
 		if err := binary.Write(w, byteOrder, uint64(e)); err != nil {
 			return err
 		}
@@ -278,13 +278,13 @@ func ReadElement(r io.Reader, element interface{}) error {
 			return err
 		}
 
-	case *btcutil.Amount:
+	case *xpcutil.Amount:
 		var a uint64
 		if err := binary.Read(r, byteOrder, &a); err != nil {
 			return err
 		}
 
-		*e = btcutil.Amount(a)
+		*e = xpcutil.Amount(a)
 
 	case *lnwire.MilliSatoshi:
 		var a uint64

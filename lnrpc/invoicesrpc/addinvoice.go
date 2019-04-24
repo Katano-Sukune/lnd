@@ -9,8 +9,8 @@ import (
 	"math"
 	"time"
 
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/davecgh/go-spew/spew"
 
 	"github.com/lightningnetwork/lnd/channeldb"
@@ -72,7 +72,7 @@ type AddInvoiceData struct {
 	Hash *lntypes.Hash
 
 	// The value of this invoice in satoshis.
-	Value btcutil.Amount
+	Value xpcutil.Amount
 
 	// Hash (SHA-256) of a description of the payment. Used if the
 	// description of payment (memo) is too long to naturally fit within the
@@ -196,7 +196,7 @@ func AddInvoice(ctx context.Context, cfg *AddInvoiceConfig,
 
 	// If specified, add a fallback address to the payment request.
 	if len(invoice.FallbackAddr) > 0 {
-		addr, err := btcutil.DecodeAddress(invoice.FallbackAddr,
+		addr, err := xpcutil.DecodeAddress(invoice.FallbackAddr,
 			cfg.ChainParams)
 		if err != nil {
 			return nil, nil, fmt.Errorf("invalid fallback address: %v",

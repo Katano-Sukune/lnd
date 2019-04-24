@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/btcsuite/btcd/chaincfg"
-	bitcoinCfg "github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	bitcoinWire "github.com/btcsuite/btcd/wire"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	bitcoinCfg "github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	bitcoinWire "github.com/Katano-Sukune/xpcd/wire"
 	"github.com/lightningnetwork/lnd/keychain"
 	litecoinCfg "github.com/ltcsuite/ltcd/chaincfg"
 	litecoinWire "github.com/ltcsuite/ltcd/wire"

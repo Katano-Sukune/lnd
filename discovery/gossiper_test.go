@@ -15,10 +15,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/go-errors/errors"
 	"github.com/lightningnetwork/lnd/chainntnfs"
@@ -61,7 +61,7 @@ var (
 	trickleDelay        = time.Millisecond * 100
 	retransmitDelay     = time.Hour * 1
 	proofMatureDelta    uint32
-	maxBtcFundingAmount = btcutil.Amount(1<<62) - 1
+	maxBtcFundingAmount = xpcutil.Amount(1<<62) - 1
 )
 
 // makeTestDB creates a new instance of the ChannelDB for testing purposes. A
@@ -3503,7 +3503,7 @@ func TestProcessChannelAnnouncementOptionalMsgFields(t *testing.T) {
 	// assertOptionalMsgFields is a helper closure that ensures the optional
 	// message fields were set as intended.
 	assertOptionalMsgFields := func(chanID lnwire.ShortChannelID,
-		capacity btcutil.Amount, channelPoint wire.OutPoint) {
+		capacity xpcutil.Amount, channelPoint wire.OutPoint) {
 
 		t.Helper()
 
@@ -3528,7 +3528,7 @@ func TestProcessChannelAnnouncementOptionalMsgFields(t *testing.T) {
 
 	// Providing the capacity and channel point as optional fields should
 	// propagate them all the way down to the router.
-	capacity := btcutil.Amount(1000)
+	capacity := xpcutil.Amount(1000)
 	channelPoint := wire.OutPoint{Index: 1}
 	sendLocalMsg(
 		t, ctx, chanAnn2, localKey, ChannelCapacity(capacity),

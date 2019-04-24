@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/channeldb"
 )
 
@@ -965,7 +965,7 @@ func (n *TxNotifier) CancelSpend(spendRequest SpendRequest, spendID uint64) {
 // check whether the transaction is relevant to the notifier if it spends any
 // outpoints/output scripts for which we currently have registered notifications
 // for. If it is relevant, spend notifications will be dispatched to the caller.
-func (n *TxNotifier) ProcessRelevantSpendTx(tx *btcutil.Tx,
+func (n *TxNotifier) ProcessRelevantSpendTx(tx *xpcutil.Tx,
 	blockHeight uint32) error {
 
 	select {
@@ -1155,7 +1155,7 @@ func (n *TxNotifier) dispatchSpendDetails(ntfn *SpendNtfn, details *SpendDetail)
 // clients, NotifyHeight must be called with the same block height in order to
 // maintain correctness.
 func (n *TxNotifier) ConnectTip(blockHash *chainhash.Hash, blockHeight uint32,
-	txns []*btcutil.Tx) error {
+	txns []*xpcutil.Tx) error {
 
 	select {
 	case <-n.quit:
@@ -1228,7 +1228,7 @@ func (n *TxNotifier) ConnectTip(blockHash *chainhash.Hash, blockHeight uint32,
 // filterTx determines whether the transaction spends or confirms any
 // outstanding pending requests. The onConf and onSpend callbacks can be used to
 // retrieve all the requests fulfilled by this transaction as they occur.
-func (n *TxNotifier) filterTx(tx *btcutil.Tx, blockHash *chainhash.Hash,
+func (n *TxNotifier) filterTx(tx *xpcutil.Tx, blockHash *chainhash.Hash,
 	blockHeight uint32, onConf func(ConfRequest, *TxConfirmation),
 	onSpend func(SpendRequest, *SpendDetail)) {
 

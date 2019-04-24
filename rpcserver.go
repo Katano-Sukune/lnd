@@ -18,14 +18,14 @@ import (
 
 	"github.com/lightningnetwork/lnd/lnrpc/routerrpc"
 
-	"github.com/btcsuite/btcd/blockchain"
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/btcwallet/wallet/txauthor"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
+	"github.com/Katano-Sukune/xpcwallet/waddrmgr"
+	"github.com/Katano-Sukune/xpcwallet/wallet/txauthor"
 	"github.com/coreos/bbolt"
 	"github.com/davecgh/go-spew/spew"
 	proxy "github.com/grpc-ecosystem/grpc-gateway/runtime"
@@ -452,7 +452,7 @@ func newRPCServer(s *server, macService *macaroons.Service,
 	routerBackend := &routerrpc.RouterBackend{
 		MaxPaymentMSat: maxPaymentMSat,
 		SelfNode:       selfNode.PubKeyBytes,
-		FetchChannelCapacity: func(chanID uint64) (btcutil.Amount,
+		FetchChannelCapacity: func(chanID uint64) (xpcutil.Amount,
 			error) {
 
 			info, _, _, err := graph.FetchChannelEdgesByID(chanID)
@@ -679,7 +679,7 @@ func (r *rpcServer) Stop() error {
 func addrPairsToOutputs(addrPairs map[string]int64) ([]*wire.TxOut, error) {
 	outputs := make([]*wire.TxOut, 0, len(addrPairs))
 	for addr, amt := range addrPairs {
-		addr, err := btcutil.DecodeAddress(addr, activeNetParams.Params)
+		addr, err := xpcutil.DecodeAddress(addr, activeNetParams.Params)
 		if err != nil {
 			return nil, err
 		}
@@ -896,12 +896,12 @@ func (r *rpcServer) SendCoins(ctx context.Context,
 	}
 
 	rpcsLog.Infof("[sendcoins] addr=%v, amt=%v, sat/kw=%v, sweep_all=%v",
-		in.Addr, btcutil.Amount(in.Amount), int64(feePerKw),
+		in.Addr, xpcutil.Amount(in.Amount), int64(feePerKw),
 		in.SendAll)
 
 	// Decode the address receiving the coins, we need to check whether the
 	// address is valid for this network.
-	targetAddr, err := btcutil.DecodeAddress(in.Addr, activeNetParams.Params)
+	targetAddr, err := xpcutil.DecodeAddress(in.Addr, activeNetParams.Params)
 	if err != nil {
 		return nil, err
 	}
@@ -1054,7 +1054,7 @@ func (r *rpcServer) NewAddress(ctx context.Context,
 	// Translate the gRPC proto address type to the wallet controller's
 	// available address types.
 	var (
-		addr btcutil.Address
+		addr xpcutil.Address
 		err  error
 	)
 	switch in.Type {
@@ -1323,8 +1323,8 @@ func (r *rpcServer) OpenChannel(in *lnrpc.OpenChannelRequest,
 			"not active yet")
 	}
 
-	localFundingAmt := btcutil.Amount(in.LocalFundingAmount)
-	remoteInitialBalance := btcutil.Amount(in.PushSat)
+	localFundingAmt := xpcutil.Amount(in.LocalFundingAmount)
+	remoteInitialBalance := xpcutil.Amount(in.PushSat)
 	minHtlc := lnwire.MilliSatoshi(in.MinHtlcMsat)
 	remoteCsvDelay := uint16(in.RemoteCsvDelay)
 
@@ -1506,8 +1506,8 @@ func (r *rpcServer) OpenChannelSync(ctx context.Context,
 		return nil, err
 	}
 
-	localFundingAmt := btcutil.Amount(in.LocalFundingAmount)
-	remoteInitialBalance := btcutil.Amount(in.PushSat)
+	localFundingAmt := xpcutil.Amount(in.LocalFundingAmount)
+	remoteInitialBalance := xpcutil.Amount(in.PushSat)
 	minHtlc := lnwire.MilliSatoshi(in.MinHtlcMsat)
 	remoteCsvDelay := uint16(in.RemoteCsvDelay)
 
@@ -2109,7 +2109,7 @@ func (r *rpcServer) ChannelBalance(ctx context.Context,
 		return nil, err
 	}
 
-	var balance btcutil.Amount
+	var balance xpcutil.Amount
 	for _, channel := range openChannels {
 		balance += channel.LocalCommitment.LocalBalance.ToSatoshis()
 	}
@@ -2119,7 +2119,7 @@ func (r *rpcServer) ChannelBalance(ctx context.Context,
 		return nil, err
 	}
 
-	var pendingOpenBalance btcutil.Amount
+	var pendingOpenBalance xpcutil.Amount
 	for _, channel := range pendingChannels {
 		pendingOpenBalance += channel.LocalCommitment.LocalBalance.ToSatoshis()
 	}
@@ -2162,7 +2162,7 @@ func (r *rpcServer) PendingChannels(ctx context.Context,
 		// TODO(roasbeef): query for funding tx from wallet, display
 		// that also?
 		localCommitment := pendingChan.LocalCommitment
-		utx := btcutil.NewTx(localCommitment.CommitTx)
+		utx := xpcutil.NewTx(localCommitment.CommitTx)
 		commitBaseWeight := blockchain.GetTransactionWeight(utx)
 		commitWeight := commitBaseWeight + input.WitnessCommitmentTxWeight
 
@@ -2544,7 +2544,7 @@ func createRPCOpenChannel(r *rpcServer, graph *channeldb.ChannelGraph,
 	// the transaction if it were to be immediately unilaterally
 	// broadcast.
 	localCommit := dbChannel.LocalCommitment
-	utx := btcutil.NewTx(localCommit.CommitTx)
+	utx := xpcutil.NewTx(localCommit.CommitTx)
 	commitBaseWeight := blockchain.GetTransactionWeight(utx)
 	commitWeight := commitBaseWeight + input.WitnessCommitmentTxWeight
 
@@ -2558,9 +2558,9 @@ func createRPCOpenChannel(r *rpcServer, graph *channeldb.ChannelGraph,
 	// from mSAT -> SAT, we may at any point be adding an
 	// additional SAT to miners fees. As a result, we display a
 	// commitment fee that accounts for this externally.
-	var sumOutputs btcutil.Amount
+	var sumOutputs xpcutil.Amount
 	for _, txOut := range localCommit.CommitTx.TxOut {
-		sumOutputs += btcutil.Amount(txOut.Value)
+		sumOutputs += xpcutil.Amount(txOut.Value)
 	}
 	externalCommitFee := dbChannel.Capacity - sumOutputs
 
@@ -2782,7 +2782,7 @@ func calculateFeeLimit(feeLimit *lnrpc.FeeLimit,
 	switch feeLimit.GetLimit().(type) {
 	case *lnrpc.FeeLimit_Fixed:
 		return lnwire.NewMSatFromSatoshis(
-			btcutil.Amount(feeLimit.GetFixed()),
+			xpcutil.Amount(feeLimit.GetFixed()),
 		)
 	case *lnrpc.FeeLimit_Percent:
 		return amount * lnwire.MilliSatoshi(feeLimit.GetPercent()) / 100
@@ -2973,7 +2973,7 @@ func extractPaymentIntent(rpcPayReq *rpcPaymentRequest) (rpcPaymentIntent, error
 			}
 
 			payIntent.msat = lnwire.NewMSatFromSatoshis(
-				btcutil.Amount(rpcPayReq.Amt),
+				xpcutil.Amount(rpcPayReq.Amt),
 			)
 		} else {
 			payIntent.msat = *payReq.MilliSat
@@ -3015,7 +3015,7 @@ func extractPaymentIntent(rpcPayReq *rpcPaymentRequest) (rpcPaymentIntent, error
 	// (and a custom route wasn't specified), construct the payment
 	// from the other fields.
 	payIntent.msat = lnwire.NewMSatFromSatoshis(
-		btcutil.Amount(rpcPayReq.Amt),
+		xpcutil.Amount(rpcPayReq.Amt),
 	)
 
 	// Calculate the fee limit that should be used for this payment.
@@ -3406,7 +3406,7 @@ func (r *rpcServer) AddInvoice(ctx context.Context,
 	addInvoiceData := &invoicesrpc.AddInvoiceData{
 		Memo:            invoice.Memo,
 		Receipt:         invoice.Receipt,
-		Value:           btcutil.Amount(invoice.Value),
+		Value:           xpcutil.Amount(invoice.Value),
 		DescriptionHash: invoice.DescriptionHash,
 		Expiry:          invoice.Expiry,
 		FallbackAddr:    invoice.FallbackAddr,
@@ -3831,7 +3831,7 @@ func (r *rpcServer) GetNodeInfo(ctx context.Context,
 	// edges to gather some basic statistics about its out going channels.
 	var (
 		numChannels   uint32
-		totalCapacity btcutil.Amount
+		totalCapacity xpcutil.Amount
 	)
 	if err := node.ForEachChannel(nil, func(_ *bbolt.Tx, edge *channeldb.ChannelEdgeInfo,
 		_, _ *channeldb.ChannelEdgePolicy) error {
@@ -3999,10 +3999,10 @@ func (r *rpcServer) GetNetworkInfo(ctx context.Context,
 		numNodes             uint32
 		numChannels          uint32
 		maxChanOut           uint32
-		totalNetworkCapacity btcutil.Amount
-		minChannelSize       btcutil.Amount = math.MaxInt64
-		maxChannelSize       btcutil.Amount
-		medianChanSize       btcutil.Amount
+		totalNetworkCapacity xpcutil.Amount
+		minChannelSize       xpcutil.Amount = math.MaxInt64
+		maxChannelSize       xpcutil.Amount
+		medianChanSize       xpcutil.Amount
 	)
 
 	// We'll use this map to de-duplicate channels during our traversal.
@@ -4012,7 +4012,7 @@ func (r *rpcServer) GetNetworkInfo(ctx context.Context,
 
 	// We also keep a list of all encountered capacities, in order to
 	// calculate the median channel size.
-	var allChans []btcutil.Amount
+	var allChans []xpcutil.Amount
 
 	// We'll run through all the known nodes in the within our view of the
 	// network, tallying up the total number of nodes, and also gathering

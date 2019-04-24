@@ -7,11 +7,11 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/btcsuite/btcd/btcjson"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcwallet/chain"
-	"github.com/btcsuite/btcwallet/wtxmgr"
+	"github.com/Katano-Sukune/xpcd/btcjson"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcwallet/chain"
+	"github.com/Katano-Sukune/xpcwallet/wtxmgr"
 	"github.com/lightningnetwork/lnd/channeldb"
 )
 

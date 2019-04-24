@@ -9,11 +9,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/input"
 	"github.com/lightningnetwork/lnd/keychain"
 	"github.com/lightningnetwork/lnd/lnwallet"
@@ -51,7 +51,7 @@ var (
 	}
 
 	// addr is the server's reward address given to watchtower clients.
-	addr, _ = btcutil.DecodeAddress(
+	addr, _ = xpcutil.DecodeAddress(
 		"mrX9vMRYLfVy1BnZbc5gZjuyaqH3ZW2ZHz", &chaincfg.TestNet3Params,
 	)
 
@@ -411,7 +411,7 @@ func newHarness(t *testing.T, cfg harnessCfg) *testHarness {
 		DB:           serverDB,
 		ReadTimeout:  timeout,
 		WriteTimeout: timeout,
-		NewAddress: func() (btcutil.Address, error) {
+		NewAddress: func() (xpcutil.Address, error) {
 			return addr, nil
 		},
 	}

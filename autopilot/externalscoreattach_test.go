@@ -3,8 +3,8 @@ package autopilot_test
 import (
 	"testing"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/autopilot"
 )
 
@@ -62,7 +62,7 @@ func TestSetNodeScores(t *testing.T) {
 		q[nID] = struct{}{}
 	}
 	resp, err := h.NodeScores(
-		nil, nil, btcutil.Amount(btcutil.SatoshiPerBitcoin), q,
+		nil, nil, xpcutil.Amount(xpcutil.SatoshiPerBitcoin), q,
 	)
 	if err != nil {
 		t.Fatal(err)

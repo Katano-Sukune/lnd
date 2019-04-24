@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/keychain"
 )
 
@@ -136,7 +136,7 @@ func TestHTLCSenderSpendValidation(t *testing.T) {
 		testWalletPrivKey)
 	bobKeyPriv, bobKeyPub := btcec.PrivKeyFromBytes(btcec.S256(),
 		bobsPrivKey)
-	paymentAmt := btcutil.Amount(1 * 10e8)
+	paymentAmt := xpcutil.Amount(1 * 10e4)
 
 	aliceLocalKey := TweakPubKey(aliceKeyPub, commitPoint)
 	bobLocalKey := TweakPubKey(bobKeyPub, commitPoint)
@@ -390,7 +390,7 @@ func TestHTLCReceiverSpendValidation(t *testing.T) {
 		testWalletPrivKey)
 	bobKeyPriv, bobKeyPub := btcec.PrivKeyFromBytes(btcec.S256(),
 		bobsPrivKey)
-	paymentAmt := btcutil.Amount(1 * 10e8)
+	paymentAmt := xpcutil.Amount(1 * 10e4)
 	cltvTimeout := uint32(8)
 
 	aliceLocalKey := TweakPubKey(aliceKeyPub, commitPoint)
@@ -621,7 +621,7 @@ func TestSecondLevelHtlcSpends(t *testing.T) {
 	t.Parallel()
 
 	// We'll start be creating a creating a 2BTC HTLC.
-	const htlcAmt = btcutil.Amount(2 * 10e8)
+	const htlcAmt = xpcutil.Amount(2 * 10e4)
 
 	// In all of our scenarios, the CSV timeout to claim a self output will
 	// be 5 blocks.

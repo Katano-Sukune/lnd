@@ -19,7 +19,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcutil"
 	flags "github.com/jessevdk/go-flags"
 	"github.com/lightningnetwork/lnd/build"
 	"github.com/lightningnetwork/lnd/chanbackup"
@@ -83,7 +83,7 @@ const (
 )
 
 var (
-	defaultLndDir     = btcutil.AppDataDir("lnd", false)
+	defaultLndDir     = xpcutil.AppDataDir("lnd", false)
 	defaultConfigFile = filepath.Join(defaultLndDir, defaultConfigFilename)
 	defaultDataDir    = filepath.Join(defaultLndDir, defaultDataDirname)
 	defaultLogDir     = filepath.Join(defaultLndDir, defaultLogDirname)
@@ -91,14 +91,14 @@ var (
 	defaultTLSCertPath = filepath.Join(defaultLndDir, defaultTLSCertFilename)
 	defaultTLSKeyPath  = filepath.Join(defaultLndDir, defaultTLSKeyFilename)
 
-	defaultBtcdDir         = btcutil.AppDataDir("btcd", false)
+	defaultBtcdDir         = xpcutil.AppDataDir("btcd", false)
 	defaultBtcdRPCCertFile = filepath.Join(defaultBtcdDir, "rpc.cert")
 
-	defaultLtcdDir         = btcutil.AppDataDir("ltcd", false)
+	defaultLtcdDir         = xpcutil.AppDataDir("ltcd", false)
 	defaultLtcdRPCCertFile = filepath.Join(defaultLtcdDir, "rpc.cert")
 
-	defaultBitcoindDir  = btcutil.AppDataDir("bitcoin", false)
-	defaultLitecoindDir = btcutil.AppDataDir("litecoin", false)
+	defaultBitcoindDir  = xpcutil.AppDataDir("bitcoin", false)
+	defaultLitecoindDir = xpcutil.AppDataDir("litecoin", false)
 
 	defaultTorSOCKS   = net.JoinHostPort("localhost", strconv.Itoa(defaultTorSOCKSPort))
 	defaultTorDNS     = net.JoinHostPort(defaultTorDNSHost, strconv.Itoa(defaultTorDNSPort))
@@ -1032,7 +1032,7 @@ func loadConfig() (*config, error) {
 
 // cleanAndExpandPath expands environment variables and leading ~ in the
 // passed path, cleans the result, and returns it.
-// This function is taken from https://github.com/btcsuite/btcd
+// This function is taken from https://github.com/Katano-Sukune/xpcd
 func cleanAndExpandPath(path string) string {
 	if path == "" {
 		return ""

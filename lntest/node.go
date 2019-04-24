@@ -20,10 +20,10 @@ import (
 	"google.golang.org/grpc/credentials"
 	macaroon "gopkg.in/macaroon.v2"
 
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/go-errors/errors"
 	"github.com/lightningnetwork/lnd/chanbackup"
 	"github.com/lightningnetwork/lnd/lnrpc"
@@ -962,11 +962,11 @@ func (hn *HarnessNode) WaitForBlockchainSync(ctx context.Context) error {
 
 // WaitForBalance waits until the node sees the expected confirmed/unconfirmed
 // balance within their wallet.
-func (hn *HarnessNode) WaitForBalance(expectedBalance btcutil.Amount, confirmed bool) error {
+func (hn *HarnessNode) WaitForBalance(expectedBalance xpcutil.Amount, confirmed bool) error {
 	ctx := context.Background()
 	req := &lnrpc.WalletBalanceRequest{}
 
-	var lastBalance btcutil.Amount
+	var lastBalance xpcutil.Amount
 	doesBalanceMatch := func() bool {
 		balance, err := hn.WalletBalance(ctx, req)
 		if err != nil {
@@ -974,12 +974,12 @@ func (hn *HarnessNode) WaitForBalance(expectedBalance btcutil.Amount, confirmed 
 		}
 
 		if confirmed {
-			lastBalance = btcutil.Amount(balance.ConfirmedBalance)
-			return btcutil.Amount(balance.ConfirmedBalance) == expectedBalance
+			lastBalance = xpcutil.Amount(balance.ConfirmedBalance)
+			return xpcutil.Amount(balance.ConfirmedBalance) == expectedBalance
 		}
 
-		lastBalance = btcutil.Amount(balance.UnconfirmedBalance)
-		return btcutil.Amount(balance.UnconfirmedBalance) == expectedBalance
+		lastBalance = xpcutil.Amount(balance.UnconfirmedBalance)
+		return xpcutil.Amount(balance.UnconfirmedBalance) == expectedBalance
 	}
 
 	err := WaitPredicate(doesBalanceMatch, 30*time.Second)
@@ -992,7 +992,7 @@ func (hn *HarnessNode) WaitForBalance(expectedBalance btcutil.Amount, confirmed 
 }
 
 // fileExists reports whether the named file or directory exists.
-// This function is taken from https://github.com/btcsuite/btcd
+// This function is taken from https://github.com/Katano-Sukune/xpcd
 func fileExists(name string) bool {
 	if _, err := os.Stat(name); err != nil {
 		if os.IsNotExist(err) {

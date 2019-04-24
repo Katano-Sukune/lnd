@@ -6,11 +6,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/lightningnetwork/lnd/chainntnfs"
 	"github.com/lightningnetwork/lnd/channeldb"
@@ -104,7 +104,7 @@ type chainWatcherConfig struct {
 
 	// isOurAddr is a function that returns true if the passed address is
 	// known to us.
-	isOurAddr func(btcutil.Address) bool
+	isOurAddr func(xpcutil.Address) bool
 
 	// extractStateNumHint extracts the encoded state hint using the passed
 	// obfuscater. This is used by the chain watcher to identify which
@@ -525,8 +525,8 @@ func (c *chainWatcher) closeObserver(spendNtfn *chainntnfs.SpendEvent) {
 // to a script that the wallet controls. If no outputs pay to us, then we
 // return zero. This is possible as our output may have been trimmed due to
 // being dust.
-func (c *chainWatcher) toSelfAmount(tx *wire.MsgTx) btcutil.Amount {
-	var selfAmt btcutil.Amount
+func (c *chainWatcher) toSelfAmount(tx *wire.MsgTx) xpcutil.Amount {
+	var selfAmt xpcutil.Amount
 	for _, txOut := range tx.TxOut {
 		_, addrs, _, err := txscript.ExtractPkScriptAddrs(
 			// Doesn't matter what net we actually pass in.
@@ -538,7 +538,7 @@ func (c *chainWatcher) toSelfAmount(tx *wire.MsgTx) btcutil.Amount {
 
 		for _, addr := range addrs {
 			if c.cfg.isOurAddr(addr) {
-				selfAmt += btcutil.Amount(txOut.Value)
+				selfAmt += xpcutil.Amount(txOut.Value)
 			}
 		}
 	}
@@ -656,7 +656,7 @@ func (c *chainWatcher) dispatchLocalForceClose(
 		closeSummary.TimeLockedBalance = chanSnapshot.LocalBalance.ToSatoshis()
 	}
 	for _, htlc := range forceClose.HtlcResolutions.OutgoingHTLCs {
-		htlcValue := btcutil.Amount(htlc.SweepSignDesc.Output.Value)
+		htlcValue := xpcutil.Amount(htlc.SweepSignDesc.Output.Value)
 		closeSummary.TimeLockedBalance += htlcValue
 	}
 

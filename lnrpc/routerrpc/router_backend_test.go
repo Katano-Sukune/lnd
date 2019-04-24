@@ -6,7 +6,7 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/lnwire"
 	"github.com/lightningnetwork/lnd/routing"
 
@@ -110,7 +110,7 @@ func TestQueryRoutes(t *testing.T) {
 		FindRoutes:     findRoutes,
 		SelfNode:       routing.Vertex{1, 2, 3},
 		FetchChannelCapacity: func(chanID uint64) (
-			btcutil.Amount, error) {
+			xpcutil.Amount, error) {
 
 			return 1, nil
 		},

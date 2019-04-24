@@ -10,9 +10,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/coreos/bbolt"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/go-errors/errors"
@@ -1126,7 +1126,7 @@ func (r *ChannelRouter) processUpdate(msg interface{}) error {
 
 		// TODO(roasbeef): this is a hack, needs to be removed
 		// after commitment fees are dynamic.
-		msg.Capacity = btcutil.Amount(chanUtxo.Value)
+		msg.Capacity = xpcutil.Amount(chanUtxo.Value)
 		msg.ChannelPoint = *fundingPoint
 		if err := r.cfg.Graph.AddChannelEdge(msg); err != nil {
 			return errors.Errorf("unable to add edge: %v", err)

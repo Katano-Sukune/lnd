@@ -6,9 +6,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/btcsuite/btcd/btcec"
-	bitcoinCfg "github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	bitcoinCfg "github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lightning-onion"
 	"github.com/lightningnetwork/lnd/channeldb"
 	"github.com/lightningnetwork/lnd/htlcswitch"
@@ -124,8 +124,8 @@ func TestCircuitMapInit(t *testing.T) {
 
 var halfCircuitTests = []struct {
 	hash      [32]byte
-	inValue   btcutil.Amount
-	outValue  btcutil.Amount
+	inValue   xpcutil.Amount
+	outValue  xpcutil.Amount
 	chanID    lnwire.ShortChannelID
 	htlcID    uint64
 	encrypter htlcswitch.ErrorEncrypter

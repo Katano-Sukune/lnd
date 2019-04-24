@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // htlcOutgoingContestResolver is a ContractResolver that's able to resolve an
@@ -97,7 +97,7 @@ func (h *htlcOutgoingContestResolver) Resolve() (ContractResolver, error) {
 	// below.
 	//
 	// Source:
-	// https://github.com/btcsuite/btcd/blob/991d32e72fe84d5fbf9c47cd604d793a0cd3a072/blockchain/validate.go#L154
+	// https://github.com/Katano-Sukune/xpcd/blob/991d32e72fe84d5fbf9c47cd604d793a0cd3a072/blockchain/validate.go#L154
 	if uint32(currentHeight) >= h.htlcResolution.Expiry-1 {
 		log.Infof("%T(%v): HTLC has expired (height=%v, expiry=%v), "+
 			"transforming into timeout resolver", h,
@@ -163,7 +163,7 @@ func (h *htlcOutgoingContestResolver) report() *ContractReport {
 
 	finalAmt := h.htlcAmt.ToSatoshis()
 	if h.htlcResolution.SignedTimeoutTx != nil {
-		finalAmt = btcutil.Amount(
+		finalAmt = xpcutil.Amount(
 			h.htlcResolution.SignedTimeoutTx.TxOut[0].Value,
 		)
 	}

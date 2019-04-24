@@ -8,15 +8,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/btcwallet/wallet"
-	"github.com/btcsuite/btcwallet/walletdb"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcwallet/waddrmgr"
+	"github.com/Katano-Sukune/xpcwallet/wallet"
+	"github.com/Katano-Sukune/xpcwallet/walletdb"
 	"github.com/davecgh/go-spew/spew"
 
-	_ "github.com/btcsuite/btcwallet/walletdb/bdb" // Required in order to create the default database.
+	_ "github.com/Katano-Sukune/xpcwallet/walletdb/bdb" // Required in order to create the default database.
 )
 
 // versionZeroKeyFamilies is a slice of all the known key families for first

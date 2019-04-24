@@ -9,9 +9,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/coreos/bbolt"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/lightningnetwork/lnd/chainntnfs"
@@ -1510,8 +1510,8 @@ func (s *Switch) htlcForwarder() {
 	// TODO(roasbeef): cleared vs settled distinction
 	var (
 		totalNumUpdates uint64
-		totalSatSent    btcutil.Amount
-		totalSatRecv    btcutil.Amount
+		totalSatSent    xpcutil.Amount
+		totalSatRecv    xpcutil.Amount
 	)
 	s.cfg.LogEventTicker.Resume()
 	defer s.cfg.LogEventTicker.Stop()
@@ -1620,8 +1620,8 @@ out:
 
 			var (
 				newNumUpdates uint64
-				newSatSent    btcutil.Amount
-				newSatRecv    btcutil.Amount
+				newSatSent    xpcutil.Amount
+				newSatRecv    xpcutil.Amount
 			)
 
 			// Next, we'll run through all the registered links and
@@ -1639,8 +1639,8 @@ out:
 
 			var (
 				diffNumUpdates uint64
-				diffSatSent    btcutil.Amount
-				diffSatRecv    btcutil.Amount
+				diffSatSent    xpcutil.Amount
+				diffSatRecv    xpcutil.Amount
 			)
 
 			// If this is the first time we're computing these

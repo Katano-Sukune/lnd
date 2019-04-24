@@ -6,9 +6,9 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/go-errors/errors"
 	"github.com/lightningnetwork/lnd/channeldb"
@@ -198,7 +198,7 @@ type ClosedChanSummary struct {
 	ChanID uint64
 
 	// Capacity was the total capacity of the channel before it was closed.
-	Capacity btcutil.Amount
+	Capacity xpcutil.Amount
 
 	// ClosedHeight is the height in the chain that the channel was closed
 	// at.
@@ -267,7 +267,7 @@ type ChannelEdgeUpdate struct {
 	ChanPoint wire.OutPoint
 
 	// Capacity is the capacity of the newly created channel.
-	Capacity btcutil.Amount
+	Capacity xpcutil.Amount
 
 	// MinHTLC is the minimum HTLC amount that this channel will forward.
 	MinHTLC lnwire.MilliSatoshi

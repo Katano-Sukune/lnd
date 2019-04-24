@@ -7,7 +7,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/lightningnetwork/lnd/channeldb"
 	"github.com/lightningnetwork/lnd/lntypes"
@@ -372,7 +372,7 @@ func (i *InvoiceRegistry) deliverSingleBacklogEvents(
 // by the passed preimage. Once this invoice is added, subsystems within the
 // daemon add/forward HTLCs that are able to obtain the proper preimage
 // required for redemption in the case that we're the final destination.
-func (i *InvoiceRegistry) AddDebugInvoice(amt btcutil.Amount,
+func (i *InvoiceRegistry) AddDebugInvoice(amt xpcutil.Amount,
 	preimage lntypes.Preimage) {
 
 	paymentHash := preimage.Hash()

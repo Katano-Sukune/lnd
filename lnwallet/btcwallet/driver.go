@@ -3,7 +3,7 @@ package btcwallet
 import (
 	"fmt"
 
-	"github.com/btcsuite/btcwallet/chain"
+	"github.com/Katano-Sukune/xpcwallet/chain"
 	"github.com/lightningnetwork/lnd/lnwallet"
 )
 

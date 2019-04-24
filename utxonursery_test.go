@@ -14,11 +14,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/channeldb"
 	"github.com/lightningnetwork/lnd/input"
 	"github.com/lightningnetwork/lnd/lnwallet"
@@ -205,7 +205,7 @@ var (
 	kidOutputs = []kidOutput{
 		{
 			breachedOutput: breachedOutput{
-				amt:         btcutil.Amount(13e7),
+				amt:         xpcutil.Amount(13e7),
 				outpoint:    outPoints[1],
 				witnessType: input.CommitmentTimeLock,
 				confHeight:  uint32(1000),
@@ -216,7 +216,7 @@ var (
 
 		{
 			breachedOutput: breachedOutput{
-				amt:         btcutil.Amount(24e7),
+				amt:         xpcutil.Amount(24e7),
 				outpoint:    outPoints[2],
 				witnessType: input.CommitmentTimeLock,
 				confHeight:  uint32(1000),
@@ -227,7 +227,7 @@ var (
 
 		{
 			breachedOutput: breachedOutput{
-				amt:         btcutil.Amount(2e5),
+				amt:         xpcutil.Amount(2e5),
 				outpoint:    outPoints[3],
 				witnessType: input.CommitmentTimeLock,
 				confHeight:  uint32(500),
@@ -238,7 +238,7 @@ var (
 
 		{
 			breachedOutput: breachedOutput{
-				amt:         btcutil.Amount(10e6),
+				amt:         xpcutil.Amount(10e6),
 				outpoint:    outPoints[4],
 				witnessType: input.CommitmentTimeLock,
 				confHeight:  uint32(500),
@@ -671,7 +671,7 @@ func incubateTestOutput(t *testing.T, nursery *utxoNursery,
 
 func assertNurseryReport(t *testing.T, nursery *utxoNursery,
 	expectedNofHtlcs int, expectedStage uint32,
-	expectedLimboBalance btcutil.Amount) {
+	expectedLimboBalance xpcutil.Amount) {
 	report, err := nursery.NurseryReport(&testChanPoint)
 	if err != nil {
 		t.Fatal(err)

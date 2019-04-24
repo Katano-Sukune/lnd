@@ -3,12 +3,12 @@ package lookout
 import (
 	"errors"
 
-	"github.com/btcsuite/btcd/blockchain"
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcutil/txsort"
+	"github.com/Katano-Sukune/xpcd/blockchain"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/txscript"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
+	"github.com/Katano-Sukune/xpcutil/txsort"
 	"github.com/lightningnetwork/lnd/input"
 	"github.com/lightningnetwork/lnd/watchtower/blob"
 	"github.com/lightningnetwork/lnd/watchtower/wtdb"
@@ -159,9 +159,9 @@ func (p *JusticeDescriptor) assembleJusticeTxn(txWeight int64,
 
 	// First, construct add the breached inputs to our justice transaction
 	// and compute the total amount that will be swept.
-	var totalAmt btcutil.Amount
+	var totalAmt xpcutil.Amount
 	for _, input := range inputs {
-		totalAmt += btcutil.Amount(input.txOut.Value)
+		totalAmt += xpcutil.Amount(input.txOut.Value)
 		justiceTxn.AddTxIn(&wire.TxIn{
 			PreviousOutPoint: input.outPoint,
 		})
@@ -186,7 +186,7 @@ func (p *JusticeDescriptor) assembleJusticeTxn(txWeight int64,
 	// Apply a BIP69 sort to the resulting transaction.
 	txsort.InPlaceSort(justiceTxn)
 
-	btx := btcutil.NewTx(justiceTxn)
+	btx := xpcutil.NewTx(justiceTxn)
 	if err := blockchain.CheckTransactionSanity(btx); err != nil {
 		return nil, err
 	}

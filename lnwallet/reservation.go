@@ -4,10 +4,10 @@ import (
 	"net"
 	"sync"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/lightningnetwork/lnd/channeldb"
 	"github.com/lightningnetwork/lnd/input"
 	"github.com/lightningnetwork/lnd/lnwire"
@@ -22,7 +22,7 @@ import (
 type ChannelContribution struct {
 	// FundingOutpoint is the amount of funds contributed to the funding
 	// transaction.
-	FundingAmount btcutil.Amount
+	FundingAmount xpcutil.Amount
 
 	// Inputs to the funding transaction.
 	Inputs []*wire.TxIn
@@ -127,7 +127,7 @@ type ChannelReservation struct {
 // used only internally by lnwallet. In order to concurrent safety, the
 // creation of all channel reservations should be carried out via the
 // lnwallet.InitChannelReservation interface.
-func NewChannelReservation(capacity, fundingAmt btcutil.Amount,
+func NewChannelReservation(capacity, fundingAmt xpcutil.Amount,
 	commitFeePerKw SatPerKWeight, wallet *LightningWallet,
 	id uint64, pushMSat lnwire.MilliSatoshi, chainHash *chainhash.Hash,
 	flags lnwire.FundingFlag) (*ChannelReservation, error) {
@@ -238,13 +238,13 @@ func NewChannelReservation(capacity, fundingAmt btcutil.Amount,
 			LocalCommitment: channeldb.ChannelCommitment{
 				LocalBalance:  ourBalance,
 				RemoteBalance: theirBalance,
-				FeePerKw:      btcutil.Amount(commitFeePerKw),
+				FeePerKw:      xpcutil.Amount(commitFeePerKw),
 				CommitFee:     commitFee,
 			},
 			RemoteCommitment: channeldb.ChannelCommitment{
 				LocalBalance:  ourBalance,
 				RemoteBalance: theirBalance,
-				FeePerKw:      btcutil.Amount(commitFeePerKw),
+				FeePerKw:      xpcutil.Amount(commitFeePerKw),
 				CommitFee:     commitFee,
 			},
 			Db: wallet.Cfg.Database,

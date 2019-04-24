@@ -9,12 +9,12 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/btcsuite/btcd/btcjson"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/chain"
+	"github.com/Katano-Sukune/xpcd/btcjson"
+	"github.com/Katano-Sukune/xpcd/chaincfg"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
+	"github.com/Katano-Sukune/xpcwallet/chain"
 	"github.com/lightningnetwork/lnd/chainntnfs"
 	"github.com/lightningnetwork/lnd/queue"
 )
@@ -419,7 +419,7 @@ out:
 					continue
 				}
 
-				tx := btcutil.NewTx(&item.TxRecord.MsgTx)
+				tx := xpcutil.NewTx(&item.TxRecord.MsgTx)
 				err := b.txNotifier.ProcessRelevantSpendTx(
 					tx, uint32(item.Block.Height),
 				)
@@ -645,7 +645,7 @@ func (b *BitcoindNotifier) handleBlockConnected(block chainntnfs.BlockEpoch) err
 	if err != nil {
 		return fmt.Errorf("unable to get block: %v", err)
 	}
-	txns := btcutil.NewBlock(rawBlock).Transactions()
+	txns := xpcutil.NewBlock(rawBlock).Transactions()
 
 	// We'll then extend the txNotifier's height with the information of
 	// this new block, which will handle all of the notification logic for
@@ -735,7 +735,7 @@ func (b *BitcoindNotifier) RegisterSpendNtfn(outpoint *wire.OutPoint,
 		if err != nil {
 			return nil, err
 		}
-		addrs := []btcutil.Address{addr}
+		addrs := []xpcutil.Address{addr}
 		if err := b.chainConn.NotifyReceived(addrs); err != nil {
 			return nil, err
 		}

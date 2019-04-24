@@ -8,8 +8,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/lightningnetwork/lnd/chainntnfs"
 	"github.com/lightningnetwork/lnd/input"
@@ -265,7 +265,7 @@ func (s *UtxoSweeper) SweepInput(input input.Input) (chan Result, error) {
 	log.Infof("Sweep request received: out_point=%v, witness_type=%v, "+
 		"time_lock=%v, size=%v", input.OutPoint(), input.WitnessType(),
 		input.BlocksToMaturity(),
-		btcutil.Amount(input.SignDesc().Output.Value))
+		xpcutil.Amount(input.SignDesc().Output.Value))
 
 	sweeperInput := &sweepInputMessage{
 		input:      input,
