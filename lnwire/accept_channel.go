@@ -3,8 +3,8 @@ package lnwire
 import (
 	"io"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // AcceptChannel is the message Bob sends to Alice after she initiates the

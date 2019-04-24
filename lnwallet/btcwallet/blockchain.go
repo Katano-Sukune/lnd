@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/chaincfg/chainhash"
+	"github.com/Katano-Sukune/xpcd/wire"
+	"github.com/Katano-Sukune/xpcutil"
 
-	"github.com/btcsuite/btcwallet/chain"
-	"github.com/btcsuite/btcwallet/waddrmgr"
+	"github.com/Katano-Sukune/xpcwallet/chain"
+	"github.com/Katano-Sukune/xpcwallet/waddrmgr"
 	"github.com/lightninglabs/neutrino"
 	"github.com/lightningnetwork/lnd/lnwallet"
 )

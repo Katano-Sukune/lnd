@@ -4,8 +4,8 @@ import (
 	prand "math/rand"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // minMedianChanSizeFraction determines the minimum size a channel must have to

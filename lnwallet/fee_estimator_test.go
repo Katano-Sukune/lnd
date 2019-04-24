@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcutil"
 
 	"github.com/lightningnetwork/lnd/lnwallet"
 )

@@ -3,7 +3,7 @@ package lnwire
 import (
 	"fmt"
 
-	"github.com/btcsuite/btcutil"
+	"github.com/Katano-Sukune/xpcutil"
 )
 
 // mSatScale is a value that's used to scale satoshis to milli-satoshis, and

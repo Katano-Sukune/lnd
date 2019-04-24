@@ -33,8 +33,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcwallet/wallet"
+	"github.com/Katano-Sukune/xpcd/btcec"
+	"github.com/Katano-Sukune/xpcwallet/wallet"
 	proxy "github.com/grpc-ecosystem/grpc-gateway/runtime"
 	flags "github.com/jessevdk/go-flags"
 	"github.com/lightninglabs/neutrino"
@@ -481,7 +481,7 @@ func main() {
 }
 
 // fileExists reports whether the named file or directory exists.
-// This function is taken from https://github.com/btcsuite/btcd
+// This function is taken from https://github.com/Katano-Sukune/xpcd
 func fileExists(name string) bool {
 	if _, err := os.Stat(name); err != nil {
 		if os.IsNotExist(err) {
@@ -497,8 +497,8 @@ func fileExists(name string) bool {
 // desired hostnames for the service. For production/public use, consider a
 // real PKI.
 //
-// This function is adapted from https://github.com/btcsuite/btcd and
-// https://github.com/btcsuite/btcutil
+// This function is adapted from https://github.com/Katano-Sukune/xpcd and
+// https://github.com/Katano-Sukune/xpcutil
 func genCertPair(certFile, keyFile string) error {
 	rpcsLog.Infof("Generating TLS certificates...")
 
